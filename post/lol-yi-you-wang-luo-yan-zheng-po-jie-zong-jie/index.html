@@ -1,0 +1,241 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LOL易游网络验证破解总结 | Gridea</title>
+<link rel="shortcut icon" href="https://github.com/loplopuu23/gdq/favicon.ico?v=1592507283357">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://github.com/loplopuu23/gdq/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="LOL易游网络验证破解总结 | Gridea - Atom Feed" href="https://github.com/loplopuu23/gdq/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="先总结下LOL辅助一般的逻辑
+LOL的辅助现在最基本分为两种
+1 防封软件
+这种软件一般是为了解决游戏内部外挂的封号问题，腾讯的LOL游戏外挂检测是通过调用TCJ.dll实现的，比较好的防风一般可以做到完全阻断
+第二个便是游戏本体的辅助
+这..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://github.com/loplopuu23/gdq">
+  <img class="avatar" src="https://github.com/loplopuu23/gdq/images/avatar.png?v=1592507283357" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              LOL易游网络验证破解总结
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-06-19
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h4 id="先总结下lol辅助一般的逻辑">先总结下LOL辅助一般的逻辑</h4>
+<p><em><strong>LOL的辅助现在最基本分为两种</strong></em></p>
+<p>1 防封软件<br>
+这种软件一般是为了解决游戏内部外挂的封号问题，腾讯的LOL游戏外挂检测是通过调用TCJ.dll实现的，比较好的防风一般可以做到完全阻断<img src="https://img-blog.csdnimg.cn/2020061901565584.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+第二个便是游戏本体的辅助</p>
+<p>这个是通过dll文件注入LOL主程序完成的<br>
+<img src="https://img-blog.csdnimg.cn/20200619015846193.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+一般注入如果是自动完成需要CE调试查找泉水时间变量<br>
+如果是手动注入则需要进入泉水后手动进行注入<br>
+因此辅助外壳反而不是本体，辅助的内在应该是外壳所释放的dll文件</p>
+<p>因此辅助的破解可以转换为查找exe所附加的dll文件如果可以成功提取，手动注入可以达到一样的目的。</p>
+<p><strong>第一步 查壳</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200619020121502.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+软件没有壳因此尝试直接提取dll<br>
+<img src="https://img-blog.csdnimg.cn/20200619020157963.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p>RIP提取dll成功 。。。<br>
+你以为这么简单么？<br>
+一般dll为了防止二次消费或者绑定用户机器码或者dll有二次验证。<br>
+现在dll一般都有二次<br>
+<img src="https://img-blog.csdnimg.cn/20200619020340860.png" alt="在这里插入图片描述" loading="lazy"><br>
+提取dll后尝试手动注入dll注入成功 但是几秒种后闪退 猜测应该是有自检测</p>
+<p>（题外话：如果dll有壳 OD进行附加调试，之后打补丁。如果对dll打补丁需要CE动态调试寻找偏移，因为dll的内存地址为动态）</p>
+<ul>
+<li></li>
+</ul>
+<h2 id="第二步-尝试对exe本体进行分析">**<strong><strong>第二步 尝试对exe本体进行分析</strong></strong></h2>
+<ul>
+<li></li>
+</ul>
+<p>****<img src="https://img-blog.csdnimg.cn/20200619020646179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+拖入OD 查看到易游验证</p>
+<p>直接查看第一个POST（有时候会有以上不到的结果）<br>
+<img src="https://img-blog.csdnimg.cn/2020061902074981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p>在第一个POST段首 retn为段首 下断<br>
+修改push ebp 为<br>
+<img src="https://img-blog.csdnimg.cn/20200619021021565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+mov eax,下面数据段补时间</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200619021057806.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>登录后发下补得数据到了系统公告 这条API接口应该是系统公告的借口 此路不通放弃。</p>
+<h2 id="fiddler抓包">Fiddler抓包</h2>
+<p>Fiddler监听的是系统8888端口，因此可以抓包手机App，或者windows程序，但是都系要挂系统应用层代理。没有的自己去找Proxifier<br>
+<img src="https://img-blog.csdnimg.cn/2020061902154796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p>这里抓到易游验证API接口 游戏登录界面为单板验证 这边我们进行替换 劫持 。<img src="https://img-blog.csdnimg.cn/20200619021657237.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+版本号要与抓到的软件版本号一致<br>
+<img src="https://img-blog.csdnimg.cn/20200619021733989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+可以看到是同样格式的API接口 这里记住我们的调用码</p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200619021908990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>这里我们进行替换</p>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200619021948245.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>同时我们添加单码<br>
+<img src="https://img-blog.csdnimg.cn/20200619022017996.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+保存为可执行文件</p>
+<p>可以看到破解成功（这边必须要管理员运行）</p>
+<p><img src="https://img-blog.csdnimg.cn/2020061902213962.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200619022142245.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%85%88%E6%80%BB%E7%BB%93%E4%B8%8Blol%E8%BE%85%E5%8A%A9%E4%B8%80%E8%88%AC%E7%9A%84%E9%80%BB%E8%BE%91">先总结下LOL辅助一般的逻辑</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%B0%9D%E8%AF%95%E5%AF%B9exe%E6%9C%AC%E4%BD%93%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90">**<strong><strong>第二步 尝试对exe本体进行分析</strong></strong></a></li>
+<li><a href="#fiddler%E6%8A%93%E5%8C%85">Fiddler抓包</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://github.com/loplopuu23/gdq/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://github.com/loplopuu23/gdq/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
