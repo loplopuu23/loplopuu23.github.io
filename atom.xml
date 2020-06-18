@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://loplopuu23.github.io</id>
     <title>Gridea</title>
-    <updated>2020-06-18T19:27:32.485Z</updated>
+    <updated>2020-06-18T19:36:17.392Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://loplopuu23.github.io"/>
     <link rel="self" href="https://loplopuu23.github.io/atom.xml"/>
@@ -16,93 +16,5 @@
         <link href="https://loplopuu23.github.io/post/lol-yi-you-wang-luo-yan-zheng-po-jie-zong-jie/">
         </link>
         <updated>2020-06-18T19:04:18.000Z</updated>
-        <content type="html"><![CDATA[<h4 id="先总结下lol辅助一般的逻辑">先总结下LOL辅助一般的逻辑</h4>
-<p><em><strong>LOL的辅助现在最基本分为两种</strong></em></p>
-<p>1 防封软件<br>
-这种软件一般是为了解决游戏内部外挂的封号问题，腾讯的LOL游戏外挂检测是通过调用TCJ.dll实现的，比较好的防风一般可以做到完全阻断<img src="https://img-blog.csdnimg.cn/2020061901565584.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-第二个便是游戏本体的辅助</p>
-<p>这个是通过dll文件注入LOL主程序完成的<br>
-<img src="https://img-blog.csdnimg.cn/20200619015846193.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-一般注入如果是自动完成需要CE调试查找泉水时间变量<br>
-如果是手动注入则需要进入泉水后手动进行注入<br>
-因此辅助外壳反而不是本体，辅助的内在应该是外壳所释放的dll文件</p>
-<p>因此辅助的破解可以转换为查找exe所附加的dll文件如果可以成功提取，手动注入可以达到一样的目的。</p>
-<p><strong>第一步 查壳</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20200619020121502.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-软件没有壳因此尝试直接提取dll<br>
-<img src="https://img-blog.csdnimg.cn/20200619020157963.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<p>RIP提取dll成功 。。。<br>
-你以为这么简单么？<br>
-一般dll为了防止二次消费或者绑定用户机器码或者dll有二次验证。<br>
-现在dll一般都有二次<br>
-<img src="https://img-blog.csdnimg.cn/20200619020340860.png" alt="在这里插入图片描述" loading="lazy"><br>
-提取dll后尝试手动注入dll注入成功 但是几秒种后闪退 猜测应该是有自检测</p>
-<p>（题外话：如果dll有壳 OD进行附加调试，之后打补丁。如果对dll打补丁需要CE动态调试寻找偏移，因为dll的内存地址为动态）</p>
-<ul>
-<li></li>
-</ul>
-<h2 id="第二步-尝试对exe本体进行分析">**<strong><strong>第二步 尝试对exe本体进行分析</strong></strong></h2>
-<ul>
-<li></li>
-</ul>
-<p>****<img src="https://img-blog.csdnimg.cn/20200619020646179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-拖入OD 查看到易游验证</p>
-<p>直接查看第一个POST（有时候会有以上不到的结果）<br>
-<img src="https://img-blog.csdnimg.cn/2020061902074981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<p>在第一个POST段首 retn为段首 下断<br>
-修改push ebp 为<br>
-<img src="https://img-blog.csdnimg.cn/20200619021021565.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-mov eax,下面数据段补时间</p>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200619021057806.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<p>登录后发下补得数据到了系统公告 这条API接口应该是系统公告的借口 此路不通放弃。</p>
-<h2 id="fiddler抓包">Fiddler抓包</h2>
-<p>Fiddler监听的是系统8888端口，因此可以抓包手机App，或者windows程序，但是都系要挂系统应用层代理。没有的自己去找Proxifier<br>
-<img src="https://img-blog.csdnimg.cn/2020061902154796.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<p>这里抓到易游验证API接口 游戏登录界面为单板验证 这边我们进行替换 劫持 。<img src="https://img-blog.csdnimg.cn/20200619021657237.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-版本号要与抓到的软件版本号一致<br>
-<img src="https://img-blog.csdnimg.cn/20200619021733989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-可以看到是同样格式的API接口 这里记住我们的调用码</p>
-<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200619021908990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<p>这里我们进行替换</p>
-<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200619021948245.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<p>同时我们添加单码<br>
-<img src="https://img-blog.csdnimg.cn/20200619022017996.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-保存为可执行文件</p>
-<p>可以看到破解成功（这边必须要管理员运行）</p>
-<p><img src="https://img-blog.csdnimg.cn/2020061902213962.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
-<img src="https://img-blog.csdnimg.cn/20200619022142245.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://loplopuu23.github.io/post/hello-gridea/</id>
-        <link href="https://loplopuu23.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
-]]></content>
     </entry>
 </feed>
